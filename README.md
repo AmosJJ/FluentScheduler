@@ -38,22 +38,22 @@ public class MyRegistry : Registry
 {
     public MyRegistry()
     {
-        // Schedule an IJob to run at an interval
+        // Schedule an IJob to run at an interval  （立即执行， 每隔两秒 重复执行）
         Schedule<MyJob>().ToRunNow().AndEvery(2).Seconds();
 
-        // Schedule an IJob to run once, delayed by a specific time interval
+        // Schedule an IJob to run once, delayed by a specific time interval （五秒之后执行一次程序）
         Schedule<MyJob>().ToRunOnceIn(5).Seconds();
 
-        // Schedule a simple job to run at a specific time
+        // Schedule a simple job to run at a specific time （每天的21：15执行一次）
         Schedule(() => Console.WriteLine("It's 9:15 PM now.")).ToRunEvery(1).Days().At(21, 15);
 
-        // Schedule a more complex action to run immediately and on an monthly interval
+        // Schedule a more complex action to run immediately and on an monthly interval （立即执行，每月的星期一 03：00执行一次）
         Schedule<MyComplexJob>().ToRunNow().AndEvery(1).Months().OnTheFirst(DayOfWeek.Monday).At(3, 0);
 
-        // Schedule a job using a factory method and pass parameters to the constructor.
+        // Schedule a job using a factory method and pass parameters to the constructor.（立即执行，每两秒执行一次）
         Schedule(() => new MyComplexJob("Foo", DateTime.Now)).ToRunNow().AndEvery(2).Seconds();
 
-        // Schedule multiple jobs to be run in a single schedule
+        // Schedule multiple jobs to be run in a single schedule  （立即执行，每五分钟执行一次）
         Schedule<MyJob>().AndThen<MyOtherJob>().ToRunNow().AndEvery(5).Minutes();
     }
 }
